@@ -89,6 +89,6 @@ def predict_fn(input_data, model):
     with torch.no_grad():
         output = model(data)
 
-    result = np.round(model(data).detach().cpu().numpy()).astype(np.int)
+    result = np.round(output.detach().numpy())
 
     return result
