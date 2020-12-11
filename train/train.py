@@ -57,19 +57,34 @@ def _get_train_data_loader(batch_size, training_dir):
 
 def train(model, train_loader, epochs, optimizer, loss_fn, device):
     """
-    This is the training method that is called by the PyTorch training script. The parameters
+    this is the training method that is called by the pytorch training script. the parameters
     passed are as follows:
-    model        - The PyTorch model that we wish to train.
-    train_loader - The PyTorch DataLoader that should be used during training.
-    epochs       - The total number of epochs to train for.
-    optimizer    - The optimizer to use during training.
-    loss_fn      - The loss function used for training.
-    device       - Where the model and data should be loaded (gpu or cpu).
+    model        - the pytorch model that we wish to train.
+    train_loader - the pytorch dataloader that should be used during training.
+    epochs       - the total number of epochs to train for.
+    optimizer    - the optimizer to use during training.
+    loss_fn      - the loss function used for training.
+    device       - where the model and data should be loaded (gpu or cpu).
     """
-    
-    # TODO: Paste the train() method developed in the notebook here.
+    # done: paste the train() method developed in the notebook here.
+    for epoch in range(1, epochs + 1):
+        model.train()
+        total_loss = 0
+        for batch in train_loader:
+            batch_x, batch_y = batch
 
-    pass
+            batch_x = batch_x.to(device)
+            batch_y = batch_y.to(device)
+
+            # done: complete this train method to train the model provided.
+            optimizer.zero_grad()
+            output = model(batch_x)
+            loss = loss_fn(output, batch_y)
+            loss.backward()
+            optimizer.step()
+
+            total_loss += loss.data.item()
+        print("epoch: {}, bceloss: {}".format(epoch, total_loss / len(train_loader)))
 
 
 if __name__ == '__main__':
